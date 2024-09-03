@@ -1,23 +1,26 @@
+import operator
 import time
 
 def mostrar_tabuada(numero, operacao):
     print(f"\nTabuada de {operacao} para o número {numero}:")
+
+    operacoes = {
+        "+": operator.add,
+        "-": operator.sub,
+        "*": operator.mul,
+        "/": operator.truediv
+    }
+
     for i in range(1, 11):
-        if operacao == "+":
-            resultado = numero + i
-            print(f"{numero} + {i} = {resultado}")
-        elif operacao == "-":
-            resultado = numero - i
-            print(f"{numero} - {i} = {resultado}")
-        elif operacao == "*":
-            resultado = numero * i
-            print(f"{numero} * {i} = {resultado}")
-        elif operacao == "/":
-            if i != 0:
-                resultado = numero / i
-                print(f"{numero} / {i} = {resultado}")
+        if operacao in operacoes:
+            if operacao == "/":
+                if i != 0:
+                    resultado = operacoes[operacao](numero, i)
+                    print(f"{numero} / {i} = {resultado:.2f}")
             else:
-                print(f"{numero} / {i} = indefinido")
+                resultado = operacoes[operacao](numero, i)
+                print(f"{numero} {operacao} {i} = {resultado}")
+   
         time.sleep(0.5)
 
 def tabuada_completa(numero):
@@ -36,8 +39,7 @@ while True:
     if opcao == "1":
         numero = int(input("Digite o número desejado: "))
         operacao = input("Escolha o operador aritmético desejado (+, -, *, /): ")
-        if operacao in ["+", "-", "*", "/"]:
-            mostrar_tabuada(numero, operacao)
+        mostrar_tabuada(numero, operacao)
         
     elif opcao == "2":
         numero = int(input("Digite o número para ver a tabuada completa: "))
@@ -45,6 +47,4 @@ while True:
 
     elif opcao == "3":
         print("Fim do programa")
-        break  
-    else:
-        print("Opção inválida. Por favor, escolha 1, 2 ou 3.")
+        break
