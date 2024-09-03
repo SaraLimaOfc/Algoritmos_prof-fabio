@@ -45,7 +45,6 @@ while True:
 
     elif opcao == "3":
         print("Fim do programa")
-        break  # Adiciona a instrução break para sair do loop e terminar o programa
-
+        break  
     else:
         print("Opção inválida. Por favor, escolha 1, 2 ou 3.")
