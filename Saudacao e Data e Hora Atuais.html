@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Saudacao e Data Atual</title>
+</head>
+<body>
+<script type="text/javascript">
+
+function saudacao() {
+    var nome = "Sara Lima";
+    var agora = new Date();
+    var hora = agora.getHours(); // Obtem a hora atual
+
+    var mensagem = "";
+    if (hora < 12) {
+        mensagem = "Bom dia. Seja bem-vindo(a) senhor(a) " + nome;
+    } else if (hora >= 13) {
+        mensagem = "Boa tarde. Seja bem-vindo(a) senhor(a) " + nome;
+    } else {
+        mensagem = "Seja bem-vindo(a)! Almoca conosco?";
+    }
+    document.write(mensagem + "<br>");
+}
+
+function dataAtual() {
+    var d = new Date();
+    document.write("A data e hora são: " + d.toLocaleString());
+}
+
+saudacao();
+dataAtual();
+</script>
+</body>
+</html>
+
