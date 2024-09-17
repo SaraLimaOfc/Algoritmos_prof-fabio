@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Página Integrada</title>
+    <script type="text/javascript">
+        function showWelcomeMessage() {
+            // Exibe uma mensagem de boas-vindas e a data/hora atual
+            var nome = "Sara Lima";
+            var agora = new Date();
+            var hora = agora.getHours();
+
+            var saudacao = "";
+            if (hora < 12) {
+                saudacao = "Bom dia. Seja bem-vindo(a) senhor(a) " + nome;
+            } else if (hora >= 13) {
+                saudacao = "Boa tarde. Seja bem-vindo(a) senhor(a) " + nome;
+            } else {
+                saudacao = "Seja bem-vindo(a)! Almoca conosco?";
+            }
+
+            var dataAtual = "A data e hora são: " + agora.toLocaleString();
+
+            alert(saudacao + "\n\n" + dataAtual);
+
+            // Redireciona para a nova página após o alerta
+            setTimeout(function() {
+                window.location.href = "pagina.html"; // Substitua pelo URL da sua página
+            }, 1000); // Atraso de 1 segundo para o alerta ser visível
+        }
+    </script>
+</head>
+<body>
+    <a href="#" onclick="showWelcomeMessage(); return false;">Clica aqui porque tenho uma mensagem para você S2</a>
+</body>
+</html>
