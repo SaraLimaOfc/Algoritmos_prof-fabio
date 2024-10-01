@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #e6e6fa; /* roxo claro */
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #ccc; /* Aumentei a borda */
+            background: white;
+            border-radius: 5px; /* Cantos arredondados */
+        }
+        button {
+            margin: 5px; /* espaço entre os botões */
+            padding: 8px 15px; /* padding para o botão */
+        }
+        input {
+            display: block;
+            margin: 10px auto; /* espaço entre os campos de entrada */
+            padding: 8px; /* padding para o campo de entrada */
+            width: 80%; /* largura dos campos de entrada */
+            border-radius: 5px; /* Cantos arredondados */
+            border: 1px solid #ccc; /* Borda */
+        }
+        .hidden {
+            display: none;
+        }
+        .menu-button {
+            display: block; /* Faz com que os botões fiquem um embaixo do outro */
+            width: 100%; /* largura total do botão */
+            margin: 10px 0; /* espaço vertical entre os botões */
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="login">
+        <h1>Acesso</h1>
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" required>
+        <label for="password">Senha:</label>
+        <input type="password" id="password" required>
+        <button onclick="logout()">Sair</button>
+        <button onclick="login()">Entrar</button>
+        <p id="error" class="hidden">Acesso Negado!!</p>
+    </div>
+
+    <div id="menu" class="container hidden">
+        <h2>Menu</h2>
+        <button class="menu-button" onclick="showPage('salario')">Salário Líquido</button>
+        <button class="menu-button" onclick="showPage('inss')">Desconto INSS</button>
+        <button class="menu-button" onclick="showPage('ir')">Desconto IR</button>
+        <button onclick="logout()">Sair</button>
+    </div>
+
+    <!-- Página Salário Líquido -->
+    <div id="salario" class="container hidden">
+        <h2>Calcular Salário Líquido</h2>
+        <label for="salBruto">Salário Bruto:</label>
+        <input type="text" id="salBruto" placeholder="Salário Bruto">
+        <label for="descontos">Descontos (%):</label>
+        <input type="text" id="descontos" placeholder="Descontos (%)">
+        <label for="numFilhos">Quantidade de Filhos:</label>
+        <input type="number" id="numFilhos" placeholder="Quantidade de Filhos">
+        <button onclick="calcularSalario()">Calcular</button>
+    </div>
+
+    <!-- Página INSS -->
+    <div id="inss" class="container hidden">
+        <h2>Calcular Desconto INSS</h2>
+        <label for="salarioInss">Salário Bruto:</label>
+        <input type="text" id="salarioInss" placeholder="Salário Bruto">
+        <label for="descontosInss">Desconto INSS (%):</label>
+        <input type="text" id="descontosInss" placeholder="Desconto INSS (%)">
+        <button onclick="calcularINSS()">Calcular</button>
+    </div>
+
+    <!-- Página IR -->
+    <div id="ir" class="container hidden">
+        <h2>Calcular Desconto IR</h2>
+        <label for="nomeIR">Nome:</label>
+        <input type="text" id="nomeIR" placeholder="Nome">
+        <label for="salarioLiquido">Salário Líquido:</label>
+        <input type="text" id="salarioLiquido" placeholder="Salário Líquido">
+        <button onclick="calcularIR()">Calcular</button>
+    </div>
+
+    <script>
+        // Função de login
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username === 'Sara Lima' && password === '2468') {
+                alert('Acesso Permitido');
+                document.getElementById('login').classList.add('hidden');
+                document.getElementById('menu').classList.remove('hidden');
+            } else {
+                alert('Acesso Negado');
+                document.getElementById('error').classList.remove('hidden');
+            }
+        }
+
+        // Função para sair e retornar ao login
+        function logout() {
+            alert('Acesso Negado');
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById('login').classList.remove('hidden');
+            document.getElementById('error').classList.add('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Função para mostrar páginas
+        function showPage(page) {
+            document.getElementById('salario').classList.add('hidden');
+            document.getElementById('inss').classList.add('hidden');
+            document.getElementById('ir').classList.add('hidden');
+            document.getElementById(page).classList.remove('hidden');
+        }
+
+        // Função para calcular o salário líquido
+        function calcularSalario() {
+            const salBruto = parseFloat(document.getElementById('salBruto').value);
+            const descontoPercent = parseFloat(document.getElementById('descontos').value);
+            const numFilhos = parseInt(document.getElementById('numFilhos').value);
+            const desconto = salBruto * (descontoPercent / 100); // Cálculo do desconto
+            const adicionalFilhos = numFilhos + 100;
+            const salarioLiquido = salBruto - desconto + adicionalFilhos;
+            alert(`Seu salário líquido é: R$${salarioLiquido.toFixed(2)}`);
+        }
+
+        // Função para calcular o desconto do INSS
+        function calcularINSS() {
+            const salario = parseFloat(document.getElementById('salarioInss').value);
+            const descontoInssPercent = parseFloat(document.getElementById('descontosInss').value);
+            const descontoInss = salario * (descontoInssPercent / 100); // Cálculo do desconto INSS
+            alert(`Seu desconto INSS é: R$${descontoInss.toFixed(2)}`);
+        }
+
+        // Função para calcular o desconto do IR
+        function calcularIR() {
+            const nome = document.getElementById('nomeIR').value;
+            const salarioLiquido = parseFloat(document.getElementById('salarioLiquido').value);
+            let descontoIr;
+            if (salarioLiquido < 2000) {
+                descontoIr = salarioLiquido * 0.30; // 30% se o salário líquido for menor que 2000
+            } else {
+                descontoIr = salarioLiquido * 0.40; // 40% se o salário líquido for 2000 ou mais
+            }
+            alert(`Seu desconto IR é: R$${descontoIr.toFixed(2)}`);
+        }
+    </script>
+</body>
+</html>
